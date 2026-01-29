@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Tommy {
     public static void main(String[] args) {
@@ -15,27 +14,41 @@ public class Tommy {
         System.out.println("---------------------------------------");
         Scanner inputObj = new Scanner(System.in);
         String userInput = "";
-        ArrayList<String> inputList = new ArrayList<String>(100);   //creates array object(not list)
- 
+        int counter = 0;
+        TaskManager taskManager = new TaskManager();
+
         do {
             userInput = inputObj.nextLine().trim();
+            String[] parts = userInput.split(" ", 2);
             System.out.println("---------------------------------------");
+            String keyword = parts[0].toLowerCase();
+            //Keyword: bye, list, mark, unmark
+            Task task;
 
-            if (userInput.equals("list")) {
-                if (inputList.size() > 0) {
-                    for (int i = 0; i < inputList.size(); i++) {
-                        System.out.printf("%d. %s\n", i, inputList.get(i));
-                    }
-                }
-                else {
-                    System.out.printf("Your list is empty.");
-                }
+            switch(keyword) {
+              case "bye": 
+                break;
+              case "list": 
+                System.out.printf("Here are the tasks in your list:\n");
+                taskManager.printAllTask();
+                break;
+              case "mark":
+                task = taskManager.findTask(Integer.parseInt(parts[1]));
+                task.setIsDone(true);
+                System.out.printf("Nice! I have marked this task as done:\n[X] %s\n", task.getTask());
+                break;
+              case "unmark":
+                task = taskManager.findTask(Integer.parseInt(parts[1]));
+                task.setIsDone(false);
+                System.out.printf("Nice! I have marked this task as not done yet:\n[ ] %s\n", task.getTask());
+                break;
+              default:
+                String taskString = String.join(" ", parts);
+                taskManager.addTask(counter+1, taskString, false);
+                counter++;
+                break;
             }
-            else if (!userInput.equals("bye")) {
-                inputList.add(userInput);
-                System.out.printf("added: %s\n", userInput);
-            }
-
+            
             System.out.println("---------------------------------------");
         } while (!userInput.equalsIgnoreCase("bye"));
 
