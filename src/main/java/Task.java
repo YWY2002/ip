@@ -29,4 +29,15 @@ public class Task {
     public Boolean getIsDone() {
         return this.isDone;
     }
+
+    // Help with printing the status icon
+    public String getStatusIcon() {
+        return (isDone ? "[X]" : "[ ]");
+    }
+
+    // Base toString method
+    @Override
+    public String toString() {
+        return getStatusIcon() + " " + task;
+    }
 }
