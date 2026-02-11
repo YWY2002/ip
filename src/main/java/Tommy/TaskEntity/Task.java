@@ -1,3 +1,4 @@
+package Tommy.TaskEntity;
 public class Task {
     private Integer taskId;
     private String task;

@@ -1,3 +1,4 @@
+package Tommy.Exception;
 
 
 public class TommyException extends Exception {
