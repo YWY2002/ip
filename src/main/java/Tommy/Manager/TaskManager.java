@@ -49,6 +49,7 @@ public class TaskManager {
         if (isRemoved) {
             System.out.println("The following task has been removed:");
             System.out.printf("%d.%s\n", task.getTaskId(), task.toString());
+            storage.save(taskList);
         }
         else {
             System.out.println("Task is not found. Please enter again.");

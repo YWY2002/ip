@@ -1,4 +1,1 @@
-T | 0 | fsdfsdfs
-D | 0 | wash | 14 apr
-T | 0 | fsdf
 E | 0 | comic | 12 apr | 14 apr
