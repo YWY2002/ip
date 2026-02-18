@@ -7,7 +7,7 @@ import Tommy.TaskEntity.Deadline;
 import Tommy.TaskEntity.Event;
 import Tommy.TaskEntity.Task;
 import Tommy.TaskEntity.ToDo;
-import Tommy.ui.Manager.TaskManager;
+import Tommy.Manager.TaskManager;
 
 public class Tommy {
     public static void main(String[] args) {
@@ -18,7 +18,6 @@ public class Tommy {
         
         Scanner inputObj = new Scanner(System.in);
         String userInput = "";
-        int counter = 0;
         TaskManager taskManager = new TaskManager();
 
         do {
@@ -33,8 +32,9 @@ public class Tommy {
                 System.out.println("---------------------------------------");
                 
                 Task task;
+                Integer taskId = taskManager.length() + 1;
+
                 validateCommand(command);
-                validateTask(arguments);
                 switch(command) {
                     case "bye": 
                         break;
@@ -64,28 +64,25 @@ public class Tommy {
     
                     case "todo":
                         validateTask(arguments);
-                        counter++;
                         // arguments contains the description
-                        ToDo newTodo = new ToDo(counter, arguments, false);
+                        ToDo newTodo = new ToDo(taskId, arguments, false);
                         taskManager.addTask(newTodo);
                         break;
     
                     case "deadline":
                         validateTask(arguments);
-                        counter++;
                         // Split by " /by "
                         // Example: "return book /by Sunday"
                         String[] deadlineParts = arguments.split(" /by ");
+                        validateDeadline(deadlineParts);
                         String deadlineDesc = deadlineParts[0];
                         String by = deadlineParts[1];
-                        
-                        Deadline newDeadline = new Deadline(counter, deadlineDesc, by, false);
+                        Deadline newDeadline = new Deadline(taskId, deadlineDesc, by, false);
                         taskManager.addTask(newDeadline);
                         break;
     
                     case "event":
                         validateTask(arguments);
-                        counter++;
                         // Split by " /from " and " /to "
                         // Example: "project meeting /from Mon 2pm /to 4pm"
                         int fromIndex = arguments.indexOf(" /from ");
@@ -95,10 +92,15 @@ public class Tommy {
                         String from = arguments.substring(fromIndex + 7, toIndex);
                         String to = arguments.substring(toIndex + 5);
     
-                        Event newEvent = new Event(counter, eventDesc, from, to, false);
+                        Event newEvent = new Event(taskId, eventDesc, from, to, false);
                         taskManager.addTask(newEvent);
                         break;
-    
+                    
+                    case "delete":
+                        validateTask(arguments);
+                        int deleteTaskId = Integer.parseInt(arguments);
+                        taskManager.deleteTask(deleteTaskId);
+                        break;
                     default:
                         validateCommand(command);
                         break;
@@ -106,8 +108,6 @@ public class Tommy {
             } catch (TommyException e) {
                 System.out.println(e.getMessage());
             }
-
-            
             System.out.println("---------------------------------------");
         } while (!userInput.equalsIgnoreCase("bye"));
 
@@ -123,7 +123,7 @@ public class Tommy {
     }
     private static void validateCommand(String args) throws TommyException {
         Boolean isValid = false;
-        List<String> commandList = List.of("bye", "list", "mark", "unmark", "todo", "deadline", "event");
+        List<String> commandList = List.of("bye", "list", "mark", "unmark", "todo", "deadline", "event", "delete");
 
         if (args.isBlank()) {
             throw new TommyException("Please enter a command!");
@@ -139,4 +139,9 @@ public class Tommy {
         }
     }
     // TODO validate other task type
+    private static void validateDeadline(String[] argsArray) throws TommyException {
+        if (argsArray[1].isBlank()) {
+            throw new TommyException("Please enter a deadline!");
+        }
+    }
 }
