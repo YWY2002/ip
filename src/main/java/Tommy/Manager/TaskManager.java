@@ -1,5 +1,6 @@
 package Tommy.Manager;
 import java.util.ArrayList;
+import Tommy.TaskEntity.*;
 
 import Tommy.Storage.Storage;
 import Tommy.TaskEntity.*;
@@ -42,6 +43,22 @@ public class TaskManager {
         }
     }
 
+    public void deleteTask(int taskId) {
+        Task task = findTask(taskId);
+        Boolean isRemoved = taskList.remove(task);
+        if (isRemoved) {
+            System.out.println("The following task has been removed:");
+            System.out.printf("%d.%s\n", task.getTaskId(), task.toString());
+        }
+        else {
+            System.out.println("Task is not found. Please enter again.");
+        }
+    }
+
+    public int length() {
+        return taskList.size();
+    }
+
     public void printAllTask() {
         if (taskList.size() == 0) {
             System.out.printf("Your list is empty.\n");
@@ -54,7 +71,7 @@ public class TaskManager {
         }
     }
 
-    public Task findTask(Integer taskId) {
+    public Task findTask(int taskId) {
         for (Task t : taskList) {
             if (t.getTaskId().equals(taskId)) {
                 return t;

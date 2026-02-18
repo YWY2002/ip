@@ -37,6 +37,8 @@ public class Tommy {
                 System.out.println("---------------------------------------");
                 
                 Task task;
+                Integer taskId = taskManager.length() + 1;
+
                 validateCommand(command);
                 switch(command) {
                     case "bye": 
@@ -60,15 +62,13 @@ public class Tommy {
     
                     case "todo":
                         validateTask(arguments);
-                        counter++;
                         // arguments contains the description
-                        ToDo newTodo = new ToDo(counter, arguments, false);
+                        ToDo newTodo = new ToDo(taskId, arguments, false);
                         taskManager.addTask(newTodo);
                         break;
     
                     case "deadline":
                         validateTask(arguments);
-                        counter++;
                         // Split by " /by "
                         // Example: "return book /by Sunday"
                         String[] dParts = arguments.split(" /by ");
@@ -78,7 +78,6 @@ public class Tommy {
     
                     case "event":
                         validateTask(arguments);
-                        counter++;
                         // Split by " /from " and " /to "
                         // Example: "project meeting /from Mon 2pm /to 4pm"
                         int fromIndex = arguments.indexOf(" /from ");
@@ -89,10 +88,15 @@ public class Tommy {
                         String from = arguments.substring(fromIndex + 7, toIndex);
                         String to = arguments.substring(toIndex + 5);
     
-                        Event newEvent = new Event(counter, eventDesc, from, to, false);
+                        Event newEvent = new Event(taskId, eventDesc, from, to, false);
                         taskManager.addTask(newEvent);
                         break;
-    
+                    
+                    case "delete":
+                        validateTask(arguments);
+                        int deleteTaskId = Integer.parseInt(arguments);
+                        taskManager.deleteTask(deleteTaskId);
+                        break;
                     default:
                         validateCommand(command);
                         break;
@@ -100,8 +104,6 @@ public class Tommy {
             } catch (TommyException | NumberFormatException | IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
-
-            
             System.out.println("---------------------------------------");
         } while (!userInput.equalsIgnoreCase("bye"));
 
@@ -117,7 +119,7 @@ public class Tommy {
     }
     private static void validateCommand(String args) throws TommyException {
         Boolean isValid = false;
-        List<String> commandList = List.of("bye", "list", "mark", "unmark", "todo", "deadline", "event");
+        List<String> commandList = List.of("bye", "list", "mark", "unmark", "todo", "deadline", "event", "delete");
 
         if (args.isBlank()) {
             throw new TommyException("Please enter a command!");
@@ -133,4 +135,9 @@ public class Tommy {
         }
     }
     // TODO validate other task type
+    private static void validateDeadline(String[] argsArray) throws TommyException {
+        if (argsArray[1].isBlank()) {
+            throw new TommyException("Please enter a deadline!");
+        }
+    }
 }
