@@ -1,4 +1,7 @@
+package Tommy.ui.Manager;
 import java.util.ArrayList;
+import Tommy.TaskEntity.Task;
+
 
 public class TaskManager {
     private ArrayList<Task> taskList;
