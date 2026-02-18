@@ -1,4 +1,5 @@
 package Tommy.ui;
+import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,7 +8,8 @@ import Tommy.TaskEntity.Deadline;
 import Tommy.TaskEntity.Event;
 import Tommy.TaskEntity.Task;
 import Tommy.TaskEntity.ToDo;
-import Tommy.ui.Manager.TaskManager;
+import Tommy.Manager.TaskManager;
+import Tommy.Storage.Storage;
 
 public class Tommy {
     public static void main(String[] args) {
@@ -18,8 +20,9 @@ public class Tommy {
         
         Scanner inputObj = new Scanner(System.in);
         String userInput = "";
-        int counter = 0;
-        TaskManager taskManager = new TaskManager();
+        String filePath = "data" + File.separator + "tommy.txt";
+        Storage storage = new Storage(filePath);
+        TaskManager taskManager = new TaskManager(storage);
 
         do {
             // userInput = inputObj.nextLine().trim();
@@ -29,12 +32,12 @@ public class Tommy {
                 String[] parts = userInput.split(" ", 2); 
                 String command = parts[0].toLowerCase();
                 String arguments = (parts.length > 1) ? parts[1] : "";
+                int counter = taskManager.getTaskCount();
 
                 System.out.println("---------------------------------------");
                 
                 Task task;
                 validateCommand(command);
-                validateTask(arguments);
                 switch(command) {
                     case "bye": 
                         break;
@@ -47,19 +50,12 @@ public class Tommy {
                     case "mark":
                         validateTask(arguments);
                         task = taskManager.findTask(Integer.parseInt(arguments));
-                        if (task != null) {
-                            task.setIsDone(true);
-                            System.out.printf("Nice! I have marked this task as done:\n%s\n", task.toString());
-                        }
+                        taskManager.markTask(Integer.parseInt(arguments), true);
                         break;
     
                     case "unmark":
                         validateTask(arguments);
-                        task = taskManager.findTask(Integer.parseInt(arguments));
-                        if (task != null) {
-                            task.setIsDone(false);
-                            System.out.printf("Nice! I have marked this task as not done yet:\n%s\n", task.toString());
-                        }
+                        taskManager.markTask(Integer.parseInt(arguments), false);
                         break;
     
                     case "todo":
@@ -75,12 +71,9 @@ public class Tommy {
                         counter++;
                         // Split by " /by "
                         // Example: "return book /by Sunday"
-                        String[] deadlineParts = arguments.split(" /by ");
-                        String deadlineDesc = deadlineParts[0];
-                        String by = deadlineParts[1];
-                        
-                        Deadline newDeadline = new Deadline(counter, deadlineDesc, by, false);
-                        taskManager.addTask(newDeadline);
+                        String[] dParts = arguments.split(" /by ");
+                        if (dParts.length < 2) throw new TommyException("Use /by for deadlines");
+                        taskManager.addTask(new Deadline(counter, dParts[0], dParts[1], false));
                         break;
     
                     case "event":
@@ -90,7 +83,8 @@ public class Tommy {
                         // Example: "project meeting /from Mon 2pm /to 4pm"
                         int fromIndex = arguments.indexOf(" /from ");
                         int toIndex = arguments.indexOf(" /to ");
-                        
+                        if(fromIndex == -1 || toIndex == -1) throw new TommyException("Invalid format. Use /from and /to");
+
                         String eventDesc = arguments.substring(0, fromIndex);
                         String from = arguments.substring(fromIndex + 7, toIndex);
                         String to = arguments.substring(toIndex + 5);
@@ -103,7 +97,7 @@ public class Tommy {
                         validateCommand(command);
                         break;
                 }
-            } catch (TommyException e) {
+            } catch (TommyException | NumberFormatException | IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
 
