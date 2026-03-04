@@ -1,4 +1,5 @@
 package Tommy.Manager;
+
 import java.util.ArrayList;
 import Tommy.TaskEntity.*;
 
@@ -12,18 +13,13 @@ public class TaskManager {
     public TaskManager(Storage storage) {
         this.storage = storage;
         this.taskList = storage.load(); // Load from disk on startup
-
-        // Re-assign IDs based on current list order to keep them sequential
-        for (int i = 0; i < taskList.size(); i++) {
-            taskList.get(i).setTaskId(i + 1);
-        }
     }
 
     public int getTaskCount() {
         return taskList.size();
     }
 
-    //Accept any object that inherits from Task
+    // Accept any object that inherits from Task
     public void addTask(Task newTask) {
         taskList.add(newTask);
         storage.save(taskList);
@@ -32,26 +28,26 @@ public class TaskManager {
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
-    public void markTask(int taskId, boolean isDone) {
-        Task task = findTask(taskId);
-        if (task != null) {
+    public void markTask(int index, boolean isDone) {
+        if (index > 0 && index <= taskList.size()) {
+            Task task = taskList.get(index - 1);
             task.setIsDone(isDone);
             storage.save(taskList); // Auto-save
-            
+
             String status = isDone ? "done" : "not done yet";
             System.out.printf("Nice! I have marked this task as %s:\n%s\n", status, task.toString());
+        } else {
+            System.out.println("Invalid task index.");
         }
     }
 
-    public void deleteTask(int taskId) {
-        Task task = findTask(taskId);
-        Boolean isRemoved = taskList.remove(task);
-        if (isRemoved) {
+    public void deleteTask(int index) {
+        if (index > 0 && index <= taskList.size()) {
+            Task task = taskList.remove(index - 1);
             System.out.println("The following task has been removed:");
-            System.out.printf("%d.%s\n", task.getTaskId(), task.toString());
+            System.out.printf("%d.%s\n", index, task.toString());
             storage.save(taskList);
-        }
-        else {
+        } else {
             System.out.println("Task is not found. Please enter again.");
         }
     }
@@ -64,20 +60,12 @@ public class TaskManager {
         if (taskList.size() == 0) {
             System.out.printf("Your list is empty.\n");
         } else {
-            for (Task t : taskList) {
+            for (int i = 0; i < taskList.size(); i++) {
+                Task t = taskList.get(i);
                 // Using t.toString() automatically checks if it is a ToDo, Deadline, or Event
                 // and prints the correct format ([T], [D], or [E])
-                System.out.printf("%d.%s\n", t.getTaskId(), t.toString());
+                System.out.printf("%d.%s\n", i + 1, t.toString());
             }
         }
-    }
-
-    public Task findTask(int taskId) {
-        for (Task t : taskList) {
-            if (t.getTaskId().equals(taskId)) {
-                return t;
-            }
-        }
-        return null;
     }
 }

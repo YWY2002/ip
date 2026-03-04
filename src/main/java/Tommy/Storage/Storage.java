@@ -64,23 +64,20 @@ public class Storage {
     // Helper: Convert File String -> Task Object
     private Task parseLineToTask(String line) {
         // Expected format: T | 1 | description
-        String[] parts = line.split(" \\| "); 
+        String[] parts = line.split(" \\| ");
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
-        
-        // We use a temporary ID of 0; the Manager will reassign IDs later or we just track index
-        int tempId = 0; 
 
         switch (type) {
             case "T":
-                return new ToDo(tempId, description, isDone);
+                return new ToDo(description, isDone);
             case "D":
                 // Format: D | 0 | return book | June 6th
-                return new Deadline(tempId, description, parts[3], isDone);
+                return new Deadline(description, parts[3], isDone);
             case "E":
                 // Format: E | 0 | meeting | Mon 2pm | 4pm
-                return new Event(tempId, description, parts[3], parts[4], isDone);
+                return new Event(description, parts[3], parts[4], isDone);
             default:
                 throw new IllegalArgumentException("Unknown task type");
         }
@@ -97,7 +94,7 @@ public class Storage {
             type = "T";
         } else if (t instanceof Deadline) {
             type = "D";
-            extra = " | " + ((Deadline) t).getBy(); 
+            extra = " | " + ((Deadline) t).getBy();
         } else if (t instanceof Event) {
             type = "E";
             extra = " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();

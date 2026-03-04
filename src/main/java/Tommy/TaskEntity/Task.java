@@ -1,25 +1,18 @@
 package Tommy.TaskEntity;
+
 public class Task {
-    private Integer taskId;
     private String task;
     private Boolean isDone;
 
-    public Task(Integer taskId, String task, Boolean isDone) {
-        setTaskId(taskId);
+    public Task(String task, Boolean isDone) {
         setTask(task);
         setIsDone(isDone);
-    }
-
-    public void setTaskId(Integer taskId) {
-        this.taskId = taskId;
-    }
-    public Integer getTaskId() {
-        return this.taskId;
     }
 
     public void setTask(String task) {
         this.task = task;
     }
+
     public String getTask() {
         return this.task;
     }
@@ -27,6 +20,7 @@ public class Task {
     public void setIsDone(Boolean isDone) {
         this.isDone = isDone;
     }
+
     public Boolean getIsDone() {
         return this.isDone;
     }

@@ -1,10 +1,11 @@
 package Tommy.TaskEntity;
-public class Event extends Task {
-    protected String from;
-    protected String to;
 
-    public Event(Integer taskId, String task, String from, String to, Boolean isDone) {
-        super(taskId, task, isDone);
+public class Event extends Task {
+    private String from;
+    private String to;
+
+    public Event(String task, String from, String to, Boolean isDone) {
+        super(task, isDone);
         this.from = from;
         this.to = to;
     }
@@ -17,6 +18,7 @@ public class Event extends Task {
     public String getFrom() {
         return this.from;
     }
+
     public String getTo() {
         return this.to;
     }
