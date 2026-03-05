@@ -1,4 +1,4 @@
-E | 0 | Wen Yuan attend CS2113 lecture Friday 20 Feb 2026 | 4pm | 6pm
-E | 0 | hackathon | sat | sun
 T | 0 | sleep
-D | 0 | assignment 1 | 10pm
+D | 0 | assignment 1 | tues
+E | 0 | assignment submission | mon | tues
+D | 0 | 3 | tues

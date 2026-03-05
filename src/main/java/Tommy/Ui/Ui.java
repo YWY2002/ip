@@ -1,5 +1,8 @@
 package Tommy.Ui;
+
 import java.util.Scanner;
+import java.util.ArrayList;
+import Tommy.TaskEntity.Task;
 
 public class Ui {
     private Scanner scanner;
@@ -51,6 +54,17 @@ public class Ui {
 
     public void showLoadingError() {
         System.out.println("Error loading file.");
+    }
+
+    public void showMatchingTasks(ArrayList<Task> matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            System.out.println("No matching tasks found in your list.");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.printf("%d.%s\n", i + 1, matchingTasks.get(i).toString());
+            }
+        }
     }
 
     public void close() {

@@ -52,6 +52,12 @@ public class Parser {
                 int deleteTaskId = Integer.parseInt(arguments);
                 return new DeleteCommand(deleteTaskId);
 
+            case "find":
+                if (arguments.isBlank()) {
+                    throw new TommyException("Please enter a keyword to find.");
+                }
+                return new FindCommand(arguments);
+
             default:
                 throw new TommyException("Please use a valid command!");
         }

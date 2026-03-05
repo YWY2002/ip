@@ -56,6 +56,16 @@ public class TaskManager {
         return taskList.size();
     }
 
+    public ArrayList<Task> findTasks(String keyword) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getTask().contains(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
     public void printAllTask() {
         if (taskList.size() == 0) {
             System.out.printf("Your list is empty.\n");
