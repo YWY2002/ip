@@ -6,6 +6,7 @@ import Tommy.Storage.Storage;
 import Tommy.TaskEntity.Deadline;
 import Tommy.Ui.Ui;
 
+//Inherited from Command class with specific logic of implementation
 public class AddDeadlineCommand extends Command {
     private String description;
     private String by;

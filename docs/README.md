@@ -1,9 +1,6 @@
 # Tommy User Guide
 
-// Product screenshot goes here
-
-// Product intro goes here
-Tommy is an task management program to relieve user from issues of having to remember what task needs to be done.
+Tommy is an task management program to store important task for the user to refer at their convenience. User do not have to remember what task needs to be done.
 
 ## Adding To Do tasks
 Use command todo followed by task name. 
