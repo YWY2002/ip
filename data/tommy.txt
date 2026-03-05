@@ -1,4 +1,2 @@
-T | 0 | sleep
-D | 0 | assignment 1 | tues
-E | 0 | assignment submission | mon | tues
-D | 0 | 3 | tues
+D | 0 | assignment 1 | 5 May 2359
+E | 0 | camping | 8 May | 10 May
