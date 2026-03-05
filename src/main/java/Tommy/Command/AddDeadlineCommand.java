@@ -10,11 +10,13 @@ public class AddDeadlineCommand extends Command {
     private String description;
     private String by;
 
+    //Add deadline constructor
     public AddDeadlineCommand(String description, String by) {
         this.description = description;
         this.by = by;
     }
 
+    //Add deadline task to TaskManager array
     @Override
     public void execute(TaskManager tasks, Ui ui, Storage storage) throws TommyException {
         tasks.addTask(new Deadline(description, by, false));

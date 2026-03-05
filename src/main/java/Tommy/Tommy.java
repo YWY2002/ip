@@ -14,12 +14,14 @@ public class Tommy {
     private TaskManager taskManager;
     private Ui ui;
 
+    //Initialise classes
     public Tommy(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         taskManager = new TaskManager(storage);
     }
 
+    //Loop user input till exit or keyboard interrupt
     public void run() {
         ui.startupGreetings();
         String userInput;
@@ -51,6 +53,7 @@ public class Tommy {
         ui.close();
     }
 
+    //Entry point of program
     public static void main(String[] args) {
         String filePath = "data" + File.separator + "tommy.txt";
         new Tommy(filePath).run();

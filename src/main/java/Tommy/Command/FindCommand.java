@@ -15,6 +15,7 @@ public class FindCommand extends Command {
         this.keyword = keyword;
     }
 
+    //Find task string in TaskManager array, and show results
     @Override
     public void execute(TaskManager tasks, Ui ui, Storage storage) throws TommyException {
         ArrayList<Task> matchingTasks = tasks.findTasks(keyword);

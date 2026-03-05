@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import Tommy.TaskEntity.*;
 
 import Tommy.Storage.Storage;
-import Tommy.TaskEntity.*;
 
 public class TaskManager {
     private ArrayList<Task> taskList;
@@ -15,6 +14,7 @@ public class TaskManager {
         this.taskList = storage.load(); // Load from disk on startup
     }
 
+    //Get number of tasks in TaskManager array
     public int getTaskCount() {
         return taskList.size();
     }
@@ -28,6 +28,7 @@ public class TaskManager {
         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
     }
 
+    //mark task as done
     public void markTask(int index, boolean isDone) {
         if (index > 0 && index <= taskList.size()) {
             Task task = taskList.get(index - 1);
@@ -41,6 +42,7 @@ public class TaskManager {
         }
     }
 
+    //Remove task entity from TaskManager array
     public void deleteTask(int index) {
         if (index > 0 && index <= taskList.size()) {
             Task task = taskList.remove(index - 1);
@@ -52,10 +54,12 @@ public class TaskManager {
         }
     }
 
+    //Size of TaskManager 
     public int length() {
         return taskList.size();
     }
 
+    //Find task(s) with similar string.
     public ArrayList<Task> findTasks(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : taskList) {
@@ -66,6 +70,7 @@ public class TaskManager {
         return matchingTasks;
     }
 
+    //Print all tasks currently in data/Tommy.txt
     public void printAllTask() {
         if (taskList.size() == 0) {
             System.out.printf("Your list is empty.\n");

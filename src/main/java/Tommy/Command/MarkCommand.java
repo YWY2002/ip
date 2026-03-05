@@ -14,6 +14,7 @@ public class MarkCommand extends Command {
         this.isMark = isMark;
     }
 
+    //mark or unmark created task
     @Override
     public void execute(TaskManager tasks, Ui ui, Storage storage) throws TommyException {
         tasks.markTask(index, isMark);

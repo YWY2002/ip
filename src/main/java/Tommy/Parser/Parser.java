@@ -3,8 +3,10 @@ package Tommy.Parser;
 import Tommy.Exception.TommyException;
 import Tommy.Command.*;
 
+//Decompose user input into 2 or more meaningful input for program to understand.
 public class Parser {
 
+    //Split user input into 2 or more parts, command and argument
     public static Command parse(String userInput) throws TommyException {
         String[] parts = userInput.trim().split(" ", 2);
         String command = parts[0].toLowerCase();
@@ -63,12 +65,14 @@ public class Parser {
         }
     }
 
+    //If task field is empty
     private static void validateTask(String args) throws TommyException {
         if (args == null || args.isBlank()) {
             throw new TommyException("Please specify a task.");
         }
     }
 
+    //If deadline does not have deadline entered
     private static void validateDeadline(String[] argsArray) throws TommyException {
         if (argsArray.length < 2 || argsArray[1].isBlank()) {
             throw new TommyException("Please enter a deadline!");

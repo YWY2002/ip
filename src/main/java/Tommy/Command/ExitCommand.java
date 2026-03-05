@@ -8,9 +8,10 @@ import Tommy.Ui.Ui;
 public class ExitCommand extends Command {
     @Override
     public void execute(TaskManager tasks, Ui ui, Storage storage) throws TommyException {
-        // Nothing to execute for exit, but we keep it for consistency.
+        // Nothing to execute for exit
     }
 
+    //Indicate if user quit
     @Override
     public boolean isExit() {
         return true;

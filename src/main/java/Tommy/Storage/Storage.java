@@ -19,12 +19,12 @@ public class Storage {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath);
 
-        // 1. Handle missing file/directory
+        // Handle missing file/directory
         if (!f.exists()) {
-            return tasks; // Return empty list if file doesn't exist yet
+            return tasks; 
         }
 
-        // 2. Read and Parse
+        // Read and Parse
         try (Scanner scanner = new Scanner(f)) {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
@@ -100,7 +100,6 @@ public class Storage {
             extra = " | " + ((Event) t).getFrom() + " | " + ((Event) t).getTo();
         }
 
-        // Uses t.getTask() based on your Task.java
         return type + " | " + status + " | " + t.getTask() + extra;
     }
 }

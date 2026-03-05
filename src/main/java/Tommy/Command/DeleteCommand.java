@@ -12,6 +12,7 @@ public class DeleteCommand extends Command {
         this.index = index;
     }
 
+    //Remove task object from TaskManager array
     @Override
     public void execute(TaskManager tasks, Ui ui, Storage storage) throws TommyException {
         tasks.deleteTask(index);

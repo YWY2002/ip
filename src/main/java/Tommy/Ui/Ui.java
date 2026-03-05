@@ -11,6 +11,7 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
+    // On program load
     public void startupGreetings() {
         System.out.println("---------------------------------------");
         System.out.println("Hello! I'm Tommy, your personal assistant!");
@@ -28,6 +29,7 @@ public class Ui {
         System.out.println("---------------------------------------");
     }
 
+    //Get all input before "Enter"
     public String getUserInput() {
         if (scanner.hasNextLine()) {
             return scanner.nextLine().trim();
@@ -56,6 +58,7 @@ public class Ui {
         System.out.println("Error loading file.");
     }
 
+    // Display matching task(s) from find command, if any
     public void showMatchingTasks(ArrayList<Task> matchingTasks) {
         if (matchingTasks.isEmpty()) {
             System.out.println("No matching tasks found in your list.");
